@@ -1,19 +1,18 @@
 import React from 'react';
 import './App.css';
-import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import AppRouter from './components/AppRouter';
+import Navbar from './components/Navbar';
+import Layout from 'antd/es/layout';
 
 
-function App() {
+function App(): JSX.Element {
   return (
-    <Provider store={}>
-      <BrowserRouter>
-    <div className="App">
-      <header className="App-header">
-      </header>
-    </div>
-    </BrowserRouter>
-    </Provider>
+    <Layout>
+      <Layout.Content>
+        <Navbar />
+        <AppRouter />
+      </Layout.Content>
+    </Layout>
   );
 }
 
