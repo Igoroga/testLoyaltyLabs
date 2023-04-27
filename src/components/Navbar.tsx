@@ -38,5 +38,6 @@ const Navbar: FC = () => {
      </Header>
  )
 );
+}
 
     export default Navbar;
