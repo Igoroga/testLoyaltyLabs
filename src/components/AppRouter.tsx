@@ -4,7 +4,11 @@ import Login from '../pages/Login';
 import { privateRoutes, publicRoutes } from '../router';
 
 const AppRouter: React.FC = () => {
-    const auth: boolean = true ;
+  const {} = useSelector(state =>)  
+
+
+
+
     return auth ? (
       <Routes>
         {privateRoutes.map((route) => (
