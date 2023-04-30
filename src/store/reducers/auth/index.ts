@@ -1,17 +1,26 @@
+import { IUser } from './../../../models/IUser';
 import { AuthAction, AuthActionEnum, AuthState } from "./types";
 
 
 const initialState: AuthState = {
-    auth: false
+    auth: false,
+    error: "",
+    isLoading: false,
+    user: {} as IUser
 }
 
 
 export default function authRuducer(state = initialState, action: AuthAction): AuthState {
     switch (action.type) {
         case AuthActionEnum.SET_AUTH:
-            return { ...state, auth: action.payload }
+            return { ...state, auth: action.payload, isLoading: false }
+        case AuthActionEnum.SET_ERROR:
+            return { ...state, error: action.payload, isLoading: false }
+        case AuthActionEnum.SET_USER:
+            return { ...state, user: action.payload }
+        case AuthActionEnum.SET_LOADING:
+            return { ...state, isLoading: true }
         default:
             return state;
     }
-
 }

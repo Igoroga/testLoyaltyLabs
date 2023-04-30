@@ -2,9 +2,13 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import Login from '../pages/Login';
 import { privateRoutes, publicRoutes } from '../router';
+import { useSelector } from 'react-redux';
+import { useTypeSelector } from '../hooks/useTypeSelector';
+import auth from '../store/reducers/auth';
 
 const AppRouter: React.FC = () => {
-  const {} = useSelector(state =>)  
+  const {auth} = useTypeSelector(state=>state.authRuducer)
+  
 
 
 

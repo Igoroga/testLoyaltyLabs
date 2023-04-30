@@ -2,10 +2,13 @@ import React, { FC } from 'react';
 import { Layout, Row, Col, Menu } from 'antd';
 import Logo from '../Ui/Logo';
 
+import { useTypeSelector } from '../hooks/useTypeSelector';
+
 const { Header } = Layout;
 
 const Navbar: FC = () => {
-    const auth = true;
+    const {auth} = useTypeSelector(state=>state.authRuducer)
+
 
     return (
  auth ? (
@@ -16,8 +19,8 @@ const Navbar: FC = () => {
              </Col>
              <Col span={4}>
                  <Menu mode='horizontal' style={{ backgroundColor: 'transparent', color: 'white' }}>
-                     <Menu.Item key='login'>Log In</Menu.Item>
-                     <Menu.Item key='signup'>Sign Up</Menu.Item>
+                     <Menu.Item key='login'>Profile</Menu.Item>
+                     <Menu.Item key='signup'>Sign Out</Menu.Item>
                  </Menu>
              </Col>
          </Row>
