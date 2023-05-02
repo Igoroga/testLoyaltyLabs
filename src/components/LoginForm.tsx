@@ -1,16 +1,29 @@
 import { Input, Checkbox, Button } from 'antd';
-import React, { FC } from 'react';
+import React, { Dispatch, FC } from 'react';
 import { Form } from 'antd';
+import { useDispatch } from 'react-redux';
+import AuthActionCreators from '../store/reducers/auth/actionCreators';
+import { AuthAction } from '../store/reducers/auth/types';
+import { useAppSelector, useAppDispatch } from '../hooks/useTypeSelector';
 
-const onFinish = (values: any) => {
-    console.log('Success:', values);
+export type AppDispatch = Dispatch<AuthAction>;
+
+const LoginForm: FC = () => {
+    const dispatch = useDispatch();
+
+    const submit = () => {
+        dispatch(AuthActionCreators.login("myusername", "mypassword"));
+      };
+
+
+const onFinish = () => {
+    submit()    
   };
   
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
-const LoginForm: FC = () => {
     return (
         <Form
             name="basic"
