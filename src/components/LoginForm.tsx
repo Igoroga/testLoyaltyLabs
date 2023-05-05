@@ -1,38 +1,57 @@
 import { Input, Checkbox, Button } from 'antd';
-import React, { Dispatch, FC } from 'react';
+import React, { FC, useState } from 'react';
 import { Form } from 'antd';
-import { useDispatch } from 'react-redux';
-import AuthActionCreators from '../store/reducers/auth/actionCreators';
-import { AuthAction } from '../store/reducers/auth/types';
-import { useAppSelector, useAppDispatch } from '../hooks/useTypeSelector';
+import { useActions } from '../hooks/useActions';
+import { useTypedSelector } from '../hooks/useTypeSelector';
 
-export type AppDispatch = Dispatch<AuthAction>;
 
 const LoginForm: FC = () => {
-    const dispatch = useDispatch();
+    const { error, isLoading } = useTypedSelector(state => state.authRuducer);
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    const { login } = useActions()
+    const { setError } = useActions()
+
 
     const submit = () => {
-        dispatch(AuthActionCreators.login("myusername", "mypassword"));
-      };
+        login(username, password)
+        console.log(username);
+        console.log(password);
 
+    }
 
-const onFinish = () => {
-    submit()    
-  };
-  
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
+    const errorSubmit = () => {
+        console.log("Error");
+    }
+
+    if (error) {
+        return (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <div style={{ textAlign: 'center' }}>
+                    <div style={{ fontSize: '22px' }}>Sorry, please try again</div>
+                    <Button
+                        type="primary"
+                        htmlType="button"
+                        style={{ marginTop: '50px', scale: '1.2' }}
+                        onClick={e => setError("")}
+                    >
+                        Try again
+                    </Button>
+                </div>
+            </div>
+        )
+    }
 
     return (
         <Form
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            style={{ maxWidth: 600 }}
+            style={{ maxWidth: 600}}
             initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
+            onFinish={submit}
+            onFinishFailed={submit}
             autoComplete="off"
         >
             <Form.Item
@@ -40,7 +59,8 @@ const onFinish = () => {
                 name="username"
                 rules={[{ required: true, message: 'Please input your username!' }]}
             >
-                <Input />
+                <Input value={username}
+                    onChange={e => setUsername(e.target.value)} />
             </Form.Item>
 
             <Form.Item
@@ -48,7 +68,9 @@ const onFinish = () => {
                 name="password"
                 rules={[{ required: true, message: 'Please input your password!' }]}
             >
-                <Input.Password />
+                <Input.Password value={password}
+                    onChange={e => setPassword(e.target.value)}
+                    type={"password"} />
             </Form.Item>
 
             <Form.Item name="remember" valuePropName="checked" wrapperCol={{ offset: 8, span: 16 }}>
