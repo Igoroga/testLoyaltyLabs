@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { AppDispatch, RootState } from '../..';
+import { AppDispatch, RootState, AppThunk } from '../..';
 import { IUser } from '../../../models/IUser';
-import { AuthAction, AuthActionEnum, SetAuthAction, SetErrorAction, SetLoadingAction, SetUserAction } from './types';
+import { AuthAction, AuthActionEnum, SetAuthAction, SetErrorAction, SetIsLoadingAction, SetUserAction } from './types';
+import { setTimeout } from 'timers/promises';
 
 
 
@@ -15,34 +16,42 @@ const AuthActionCreators = {
         type: AuthActionEnum.SET_ERROR,
         payload
     }),
-    setLoading: (payload: boolean): SetLoadingAction => ({
-        type: AuthActionEnum.SET_LOADING,
+    setLoading: (payload: boolean): SetIsLoadingAction => ({
+        type: AuthActionEnum.SET_IS_LOADING,
         payload: payload
     }),
     setAuth: (auth: boolean): SetAuthAction => ({
         type: AuthActionEnum.SET_AUTH,
         payload: auth
     }),
-    logi: (username: string, password: string) => {
-        return async (dispatch: AppDispatch) => {
-            try {
-                dispatch(AuthActionCreators.setLoading(true));
-                const mockUsers = await axios.get("./users.json");
-                console.log(mockUsers);
-            } catch {
-                dispatch(AuthActionCreators.setError("Mistake I"))
-            }
-        }
-        },
-            logout: () => async (dispatch: AppDispatch) => {
-                try {
-
-                } catch {
-
+    login: (username: string, password: string) => async (dispatch: AppDispatch) => {
+        try {
+            dispatch(AuthActionCreators.setLoading(true));
+            const response = await axios.get<IUser[]>("./users.json");
+            console.log(response);            
+            const mockUser = response.data.find(user => user.username === username && user.password === password);
+                if (mockUser) {
+                    localStorage.setItem('auth', 'true');
+                    localStorage.setItem('username', mockUser.username);
+                    dispatch(AuthActionCreators.setUser(mockUser));
+                    dispatch(AuthActionCreators.setAuth(true))
+                } else {
+                    dispatch(AuthActionCreators.setError('Некорректный логин или пароль'));
+                    console.log('Некорректный логин или пароль');
                 }
-            }
+                dispatch(AuthActionCreators.setLoading(false));
+            } catch (e) {
+            dispatch(AuthActionCreators.setError('Произошла ошибка при логине'))
+        }
+    },
+    logout: () => async (dispatch: AppDispatch) => {
+            localStorage.removeItem('auth')
+        localStorage.removeItem('username')
+        dispatch(AuthActionCreators.setUser({} as IUser))
+        dispatch(AuthActionCreators.setAuth(false))
+           }
 
-    };
+};
 export default AuthActionCreators;
 
 

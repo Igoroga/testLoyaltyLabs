@@ -1,25 +1,24 @@
-import { IUser } from './../../../models/IUser';
-import { AuthAction, AuthActionEnum, AuthState } from "./types";
+import {AuthAction, AuthActionEnum, AuthState} from "./types";
+import {IUser} from "../../../models/IUser";
 
 
 const initialState: AuthState = {
-    auth: false,
-    error: "",
+    isAuth: false,
+    error: '',
     isLoading: false,
     user: {} as IUser
 }
 
-
-export default function authRuducer(state = initialState, action: AuthAction): AuthState {
+export default function authReducer(state = initialState, action: AuthAction): AuthState {
     switch (action.type) {
         case AuthActionEnum.SET_AUTH:
-            return { ...state, auth: action.payload, isLoading: false }
-        case AuthActionEnum.SET_ERROR:
-            return { ...state, error: action.payload, isLoading: false }
+            return {...state, isAuth: action.payload, isLoading: false}
         case AuthActionEnum.SET_USER:
-            return { ...state, user: action.payload }
-        case AuthActionEnum.SET_LOADING:
-            return { ...state, isLoading: true }
+            return {...state, user: action.payload}
+        case AuthActionEnum.SET_ERROR:
+            return {...state, error: action.payload, isLoading: false}
+        case AuthActionEnum.SET_IS_LOADING:
+            return {...state, isLoading: action.payload}
         default:
             return state;
     }
