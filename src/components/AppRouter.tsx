@@ -10,9 +10,6 @@ const AppRouter: React.FC = () => {
   const {isAuth} = useTypedSelector(state=>state.authRuducer)
   
 
-
-
-
     return isAuth ? (
       <Routes>
         {privateRoutes.map((route) => (
