@@ -22,5 +22,3 @@ function realNumbers(n){
 
     console.log(34.4 | 0);
 
-
-  
