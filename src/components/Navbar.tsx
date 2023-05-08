@@ -8,7 +8,7 @@ import { useActions } from '../hooks/useActions';
 const { Header } = Layout;
 
 const Navbar: FC = () => {
-    const {isAuth, user} = useTypedSelector(state=>state.authRuducer)
+    const {isAuth, user} = useTypedSelector(state=>state.authReducer)
 const {logout} = useActions()
 
 

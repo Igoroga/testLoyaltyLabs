@@ -1,7 +1,7 @@
-import authRuducer from "./auth";
-
+import authReducer from "./auth";
+import EventReducer from './event'
 
 
 export default {
-    authRuducer
+    authReducer, EventReducer
 }
