@@ -6,7 +6,7 @@ import { useTypedSelector } from '../hooks/useTypeSelector';
 
 
 const LoginForm: FC = () => {
-    const { error, isLoading } = useTypedSelector(state => state.authRuducer);
+    const { error, isLoading } = useTypedSelector(state => state.authReducer);
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 

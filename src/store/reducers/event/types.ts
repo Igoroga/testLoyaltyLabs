@@ -17,7 +17,7 @@ export interface SetGuestsAction {
     payload: IUser[]
 }
 
-export interface SetEventAction {
+export interface SetEventsAction {
     type: EventActionEnum.SET_EVENTS;
     payload: IEvent[]
 }
@@ -25,4 +25,4 @@ export interface SetEventAction {
 
 export type EventAction = 
 SetGuestsAction |
-SetEventAction
+SetEventsAction
