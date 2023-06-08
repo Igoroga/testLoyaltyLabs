@@ -54,25 +54,3 @@ const AuthActionCreators = {
 
 };
 export default AuthActionCreators;
-
-
-// login: (username: string, password: string) => async (dispatch: AppDispatch) => {
-//     try {
-//         dispatch(AuthActionCreators.setIsLoading(true));
-//         setTimeout(async () => {
-//             const response = await UserService.getUsers()
-//             const mockUser = response.data.find(user => user.username === username && user.password === password);
-//             if (mockUser) {
-//                 localStorage.setItem('auth', 'true');
-//                 localStorage.setItem('username', mockUser.username);
-//                 dispatch(AuthActionCreators.setUser(mockUser));
-//                 dispatch(AuthActionCreators.setIsAuth(true))
-//             } else {
-//                 dispatch(AuthActionCreators.setError('Некорректный логин или пароль'));
-//             }
-//             dispatch(AuthActionCreators.setIsLoading(false));
-//         }, 1000)
-//     } catch (e) {
-//         dispatch(AuthActionCreators.setError('Произошла ошибка при логине'))
-//     }
-// },
